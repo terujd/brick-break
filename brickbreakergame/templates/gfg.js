@@ -29,18 +29,34 @@ document.addEventListener("keydown", (e) => {
 });
 
 // Add movment key detection of paddle
-
-//function movePaddle(){}
 let paddle = bird
       x = paddle.offsetLeft,
-      y = paddle.offsetTop;
   document.addEventListener("keydown", (e) => {
+    var pos = x
     if (e.key == "ArrowLeft" || e.key == "a") {
       console.log("testLeft");
-      paddle.style.left = 100 + "px"
+      id = setInterval(frame, 2);
+      function frame() {
+        if (pos == 0 ) {
+          clearInterval(id);
+          x = pos
+        } else {
+        pos--; 
+        paddle.style.left = pos + 'px'; 
+      }
+    }
     }
     if (e.key == "ArrowRight" || e.key == "d") {
       console.log("testRight");
-     paddle.style.left = 2000 + "px"
-    }
-  });
+      id = setInterval(frame, 1);
+      function frame() {
+        if (pos == 2100) {
+          clearInterval(id);
+          x = pos
+        } else {
+        pos++; 
+        paddle.style.left = pos + 'px'; 
+      }
+    } 
+  }
+})
