@@ -20,25 +20,27 @@ document.addEventListener("keydown", (e) => {
     document.querySelectorAll(".pipe_sprite").forEach((e) => {
       e.remove();
     });
-    bird.style.top = "40vh";
     game_state = "Play";
     message.innerHTML = "";
     score_title.innerHTML = "Score : ";
     score_val.innerHTML = "0";
-    play();
+    //play();
   }
 });
 
 // Add movment key detection of paddle
-document.addEventListener("keydown", (e) => {
-  if (e.key == "ArrowLeft" || e.key == "a") {
-    paddle_dy = -7.6;
-    console.log("testLeft");
-  }
-  if (e.key == "ArrowRight" || e.key == "d") {
-    console.log("testRight");
-    paddle_dy = +7.6;
-  }
-});
 
-function movePaddle() {}
+//function movePaddle(){}
+let paddle = bird
+      x = paddle.offsetLeft,
+      y = paddle.offsetTop;
+  document.addEventListener("keydown", (e) => {
+    if (e.key == "ArrowLeft" || e.key == "a") {
+      console.log("testLeft");
+      paddle.style.left = 100 + "px"
+    }
+    if (e.key == "ArrowRight" || e.key == "d") {
+      console.log("testRight");
+     paddle.style.left = 2000 + "px"
+    }
+  });
