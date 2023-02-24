@@ -2,7 +2,7 @@
 let bird = document.querySelector(".paddle");
 
 // Getting bird element properties
-let bird_props = bird.getBoundingClientRect();
+//let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
 
 // Getting reference to the score element
@@ -21,23 +21,69 @@ document.addEventListener("keydown", (e) => {
       e.remove();
     });
     game_state = "Play";
+    // Start game loop
+    gameLoop();
     message.innerHTML = "";
     score_title.innerHTML = "Score : ";
     score_val.innerHTML = "0";
     //play();
   }
 });
+function gameLoop(){
+  updatePaddle();
+}
+let paddle = bird
 
+function drawPaddle() {
+  ctx.beginPath();
+  ctx.rect(paddle.x, paddle.y, paddle.width, paddle.height);
+  ctx.fillStyle = 'blue';
+  ctx.fill();
+  ctx.closePath();
+}
+
+
+ // Update paddle
+ function updatePaddle() {
+  // Update paddle position
+  paddle.x += paddle.dx;
+
+  // Keep paddle within canvas bounds
+  if (paddle.x < 0) {
+      paddle.x = 0;
+  } else if (paddle.x + paddle.width > 2200 +"px") {
+      paddle.x = (2200 + "px") - paddle.width;
+  }
+}
+
+
+  // Handle keyboard input
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 37) {
+        paddle.dx = -5;
+    } else if (event.key === 39) {
+        paddle.dx = 5;
+    }
+});
+document.addEventListener('keyup', function (event) {
+    if (event.key === 37 || event.key === 39) {
+        paddle.dx = 0;
+    }
+});
+
+
+/*
 // Add movment key detection of paddle
 let paddle = bird
-      x = paddle.offsetLeft,
+      x = paddle.offsetLeft
   document.addEventListener("keydown", (e) => {
+    document.addEventListener("keyup", (r) =>{
     var pos = x
     if (e.key == "ArrowLeft" || e.key == "a") {
       console.log("testLeft");
       id = setInterval(frame, 2);
       function frame() {
-        if (pos == 0 ) {
+        if (pos == 0|| r.key == "ArrowRight" ) {
           clearInterval(id);
           x = pos
         } else {
@@ -50,7 +96,8 @@ let paddle = bird
       console.log("testRight");
       id = setInterval(frame, 1);
       function frame() {
-        if (pos == 2100) {
+        let width = screen.width
+        if (pos == (width - 150)|| r.key == "ArrowLeft") {
           clearInterval(id);
           x = pos
         } else {
@@ -60,3 +107,5 @@ let paddle = bird
     } 
   }
 })
+})
+*/

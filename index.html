@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="game">
+        <img class="paddle" src="main.png" alt="paddle-img">
+        <img class="brick" src="brick1.png" alt="brick-img">
+        <div class="message">
+            Press Enter To Start Game
+        </div>
+        <div class="score">
+            <span class="score_title"></span>
+            <span class="score_val"></span>
+        </div>
+        <script src="gfg.js"></script>
+    </div>
+    <!-- <div class="background"></div>
+ <img class="paddle" src="main.png" alt="paddle-img">
+<img class="brick" src="brick1.png" alt="brick-img">-->
+    <div class="message">
+        Press Enter To Start Game
+    </div>
+    <div class="score">
+        <span class="score_title"></span>
+        <span class="score_val"></span>
+    </div>
+    <script src="gfg.js"></script> -->
+    <script>
+        const game = document.querySelector(".game");
+        const paddle = document.createElement("img");
+        paddle.src = "main.png";
+        paddle.classList.add("paddle");
+        game.appendChild(paddle);
+        const brick = document.createElement("img");
+        brick.src = "brick1.png";
+        brick.classList.add("brick");
+        game.appendChild(brick);
+        const message = document.createElement("div");
+        message.classList.add("message");
+        message.innerText = "Press Enter To Start Game";
+        game.appendChild(message);
+        const score = document.createElement("div");
+        score.classList.add("score");
+        const score_title = document.createElement("span");
+        score_title.classList.add("score_title");
+        score_title.innerText = "Score: ";
+        score.appendChild(score_title);
+        const score_val = document.createElement("span");
+        score_val.classList.add("score_val");
+        score_val.innerText = "0";
+        score.appendChild(score_val);
+        game.appendChild(score);
+        const background = document.createElement("div");
+        background.classList.add("background");
+        game.appendChild(background);
+        const ball = document.createElement("div");
+        ball.classList.add("ball");
+        game.appendChild(ball);
+        const brick_count = document.querySelectorAll(".brick").length;
+        let score_val = 0;
+        let paddleLeft = 200;
+        let paddleTop = 550;
+        let ballLeft = 250;
+        let ballTop = 500;
+        let ballSpeedX = 2;
+        let ballSpeedY = 2;
+        let isGameOver = false;
+        let isGameStarted = false;
+        let animationId;
+        const keyDownHandler = (e) => {
+            if (e.key === "ArrowLeft" && paddleLeft > 0) {
+                paddleLeft -= 10;
+                paddle.style.left = paddleLeft + "px";
+            } else if (e.key === "ArrowRight" && paddleLeft < 340) {
+                paddleLeft += 10;
+                paddle.style.left = paddleLeft + "px";
+            } else if (e.key === "Enter" && !isGameStarted) {
+                isGameStarted = true;
+                message.style.display = "none";
+                animationId = requestAnimationFrame(playGame);
+            }
+        };
+        const playGame = () => {
+            moveBall();
+            if (ballTop > 0 && !isGameOver) {
+                animationId = requestAnimationFrame(playGame);
+            } else {
+                gameOver();
+            }
+        };
+
+    </script>
+</body>
+
+</html>
