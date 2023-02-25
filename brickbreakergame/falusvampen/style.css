@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
+#game-screen {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  background-color: #333;
+  border: 2px solid #000;
+}
+
+#ball {
+  position: absolute;
+  top: 240px;
+  left: 190px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #f00;
+}
+
+#paddle {
+  position: absolute;
+  bottom: 10px;
+  left: 170px;
+  width: 60px;
+  height: 10px;
+  background-color: #fff;
+}
+
+.brick {
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  background-color: #00f;
+  border: 1px solid #fff;
+  /* add more styles here */
+}
+
+#game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 2px solid #000;
+}
+
+#pause-btn {
+  font-size: 16px;
+  padding: 10px;
+  background-color: #fff;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
+#pause-menu {
+  display: none;
+  position: absolute;
+  top: 180px;
+  left: 80px;
+  width: 240px;
+  padding: 20px;
+  background-color: #fff;
+  border: 2px solid #000;
+  text-align: center;
+}
+
+#pause-menu h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#pause-menu button {
+  font-size: 16px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #fff;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
