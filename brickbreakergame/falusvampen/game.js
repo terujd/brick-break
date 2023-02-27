@@ -6,8 +6,55 @@ const timer = document.getElementById("timer");
 const paddle = document.getElementById("paddle");
 const ball = document.getElementById("ball");
 const brick = document.getElementsByClassName("brick");
+const grid = document.getElementsByClassName("grid");
 
-// Paddle movement
+// -----------------------------------------------Bricks------------------------------------------------
+// Constants for brick dimensions and layout
+const numCols = 9;
+const numRows = 5;
+const brickWidth = 40;
+const brickHeight = 20;
+const brickSpacing = 2;
+
+function createBricks(levelData) {
+  // Calculate the width of the grid based on the number of columns, brick width, and spacing
+  const gridWidth = numCols * (brickWidth + brickSpacing) - brickSpacing;
+
+  // Calculate the left position of the grid to center it on the screen
+  const gridLeft = (gameScreen.clientWidth - gridWidth) / 2;
+
+  // Set the style properties of the grid
+  grid[0].style.width = gridWidth + "px";
+  grid[0].style.left = gridLeft + "px";
+  grid[0].style.top = gridLeft + "px";
+
+  // Loop through each row and column of the level data
+  for (let row = 0; row < numRows; row++) {
+    for (let col = 0; col < numCols; col++) {
+      // Create a new brick element only if the value at that position is 1
+      if (levelData[row][col] === 1) {
+        const brick = document.createElement("div");
+        brick.classList.add("brick");
+        brick.style.top = row * (brickHeight + brickSpacing) + "px";
+        brick.style.left = col * (brickWidth + brickSpacing) + "px";
+        grid[0].appendChild(brick);
+      }
+    }
+  }
+}
+// -----------------------------------------------Levels------------------------------------------------
+const levelData = [
+  [1, 0, 1, 0, 1, 0, 1, 0, 1],
+  [0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [1, 0, 1, 0, 1, 0, 1, 0, 1],
+  [0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [1, 0, 1, 0, 1, 0, 1, 0, 1],
+];
+
+createBricks(levelData);
+
+// -----------------------------------------------Paddle Movement------------------------------------------------
+
 const paddleWidth = paddle.offsetWidth;
 const gameScreenWidth = gameScreen.offsetWidth;
 
@@ -81,7 +128,8 @@ function movePaddleRight() {
   }
 }
 
-// Ball movement
+// -----------------------------------------------Ball Movement------------------------------------------------
+
 let ballReleased = false;
 
 // Initial position of the ball
@@ -106,63 +154,76 @@ let ballDirectionX = 1;
 let ballDirectionY = -1;
 let ballSpeed = 5;
 
+// Ball collision detection
+function detectBallCollisions() {
+  let ballX = ball.offsetLeft;
+  let ballY = ball.offsetTop;
+
+  // Ball hits the top
+  if (ballY < 0) {
+    ballDirectionY = 1;
+    sound("tap");
+  }
+  // Ball hits the bottom
+  if (ballY > gameScreen.offsetHeight - 20) {
+    livesCounter();
+    ballDirectionX = 1;
+    ballDirectionY = -1;
+    ballReleased = false;
+  }
+  // Ball hits the left
+  if (ballX < 0) {
+    ballDirectionX = 1;
+    sound("tap");
+  }
+  // Ball hits the right
+  if (ballX > gameScreenWidth - 20) {
+    ballDirectionX = -1;
+    sound("tap");
+  }
+  // Ball hits the paddle
+  if (
+    ballX + 20 > paddle.offsetLeft &&
+    ballX < paddle.offsetLeft + paddleWidth &&
+    ballY + 20 > paddle.offsetTop
+  ) {
+    ballDirectionY = -1;
+    sound("hit");
+  }
+  // Ball hits the brick
+  detectBrickCollisions(ballX, ballY);
+}
+
+// Brick collision detection
+function detectBrickCollisions(ballX, ballY) {
+  for (let i = 0; i < brick.length; i++) {
+    if (
+      ballX + 20 > brick[i].offsetLeft &&
+      ballX < brick[i].offsetLeft + brick[i].offsetWidth &&
+      ballY + 20 > brick[i].offsetTop &&
+      ballY < brick[i].offsetTop + brick[i].offsetHeight
+    ) {
+      ballDirectionY = 1;
+      brick[i].style.display = "none";
+      scoreCounter();
+    }
+  }
+}
+
+// Move the ball
 function moveBall() {
   let ballX = ball.offsetLeft;
   let ballY = ball.offsetTop;
   if (ballReleased) {
     requestAnimationFrame(function () {
-      // Ball hits the top
-      if (ballY < 0) {
-        ballDirectionY = 1;
-        sound("tap");
-      }
-      // Ball hits the bottom
-      if (ballY > gameScreen.offsetHeight - 20) {
-        livesCounter();
-        ballDirectionX = 1;
-        ballDirectionY = -1;
-        ballReleased = false;
-      }
-      // Ball hits the left
-      if (ballX < 0) {
-        ballDirectionX = 1;
-        sound("tap");
-      }
-      // Ball hits the right
-      if (ballX > gameScreenWidth - 20) {
-        ballDirectionX = -1;
-        sound("tap");
-      }
-      // Ball hits the paddle
-      if (
-        ballX + 20 > paddle.offsetLeft &&
-        ballX < paddle.offsetLeft + paddleWidth &&
-        ballY + 20 > paddle.offsetTop
-      ) {
-        // Play a sound from the music folder when the ball hits the paddle
-        ballDirectionY = -1;
-        sound("hit");
-      }
+      detectBallCollisions();
 
-      // Ball hits the brick
-      for (let i = 0; i < brick.length; i++) {
-        if (
-          ballX + 20 > brick[i].offsetLeft &&
-          ballX < brick[i].offsetLeft + brick[i].offsetWidth &&
-          ballY + 20 > brick[i].offsetTop &&
-          ballY < brick[i].offsetTop + brick[i].offsetHeight
-        ) {
-          ballDirectionY = 1;
-          brick[i].style.display = "none";
-          ballReleased = false;
-          scoreCounter();
-        }
-      }
       // This makes the ball move
       ballX += ballDirectionX * ballSpeed;
       ballY += ballDirectionY * ballSpeed;
       ball.style.left = ballX + "px";
       ball.style.top = ballY + "px";
+
       moveBall();
     });
   } else {
@@ -170,7 +231,7 @@ function moveBall() {
   }
 }
 
-// Game mechanics
+// -----------------------------------------------Game mechanics------------------------------------------------
 
 // Lives counter
 function livesCounter() {
