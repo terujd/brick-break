@@ -21,7 +21,7 @@
   border: 2px solid #000;
 }
 
-#ball {
+/* #ball {
   position: absolute;
   top: 240px;
   left: 190px;
@@ -29,7 +29,17 @@
   height: 20px;
   border-radius: 50%;
   background-color: #f00;
-}
+} */
+
+#ball {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: red;
+      top: 150px;
+      left: 280px;
+    }
 
 #paddle {
   position: absolute;
@@ -93,4 +103,3 @@
   border: 2px solid #000;
   cursor: pointer;
 }
-
