@@ -6,25 +6,26 @@
   </head>
   <body>
     <div id="game-container">
-      <div id="game-screen">
-        <div class="grid">
-          <div class="brick"></div>
+      <div>
+        <div id="game-screen">
+          <div class="grid">
+            <div class="brick"></div>
+          </div>
+          <div id="ball"></div>
+          <div id="paddle"></div>
+          <!-- add more brick elements here -->
         </div>
-        <div id="ball"></div>
-        <div id="paddle"></div>
-
-        <!-- add more brick elements here -->
-      </div>
-      <div id="game-info">
-        <div id="timer">Time: 0</div>
-        <div id="score">Score: 0</div>
-        <div id="lives">Lives: 3</div>
-        <button id="pause-btn">Pause</button>
-      </div>
-      <div id="pause-menu">
-        <h2>Paused</h2>
-        <button id="continue-btn">Continue</button>
-        <button id="restart-btn">Restart</button>
+        <div id="game-info">
+          <div id="timer">Time: 0</div>
+          <div id="score">Score: 0</div>
+          <div id="lives">Lives: 3</div>
+          <button id="pause-btn">Pause</button>
+        </div>
+        <div id="pause-menu">
+          <h2>Paused</h2>
+          <button id="continue-btn">Continue</button>
+          <button id="restart-btn">Restart</button>
+        </div>
       </div>
     </div>
     <script src="game.js"></script>
