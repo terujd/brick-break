@@ -61,16 +61,17 @@ const levelData = [
   [1, 0, 1, 0, 1, 0, 1, 0, 1],
 ];
 
-createBricks(level1);
+createBricks(levelData);
 
 // -----------------------------------------------Paddle Movement------------------------------------------------
 
 const paddleWidth = paddle.offsetWidth;
-const gameScreenWidth = gameScreen.offsetWidth;
+// width of the gamescreen - 3px (border kind of)
+const gameScreenWidth = gameScreen.offsetWidth - 3;
 const gameScreenHeight = gameScreen.offsetHeight;
 
-const minPaddleX = 3;
-const maxPaddleX = gameScreenWidth - paddleWidth - 5;
+const minPaddleX = 5;
+const maxPaddleX = gameScreenWidth - paddleWidth - 10;
 
 let animationId;
 let currentDirection = null;
@@ -161,16 +162,22 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-let ballDirectionX = -1;
-let ballDirectionY = -1;
+let ballDirectionX = 0;
+let ballDirectionY = 1;
 let ballSpeed = 1;
 let ballRadius = 10;
 
+function getDistance(x1, y1, x2, y2) {
+  let xDistance = x2 - x1;
+  let yDistance = y2 - y1;
+
+  return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+}
+
 // Ball collision detection
 function detectBallCollisions() {
-  // ball x and y position from the center of the ball
-  const ballX = ball.offsetLeft + 10;
-  const ballY = ball.offsetTop + 10;
+  let ballX = ball.offsetLeft + 10;
+  let ballY = ball.offsetTop - 10;
 
   // Ball hits the top
   if (ballY < 0) {
@@ -178,33 +185,41 @@ function detectBallCollisions() {
     sound("tap");
   }
   // Ball hits the bottom
-  // if (ballY > gameScreen.offsetHeight - 20) {
-  if (ballY > gameScreen.offsetHeight) {
+  if (ballY > gameScreen.offsetHeight - 20) {
     livesCounter();
     ballDirectionX = 1;
     ballDirectionY = -1;
     ballReleased = false;
   }
   // Ball hits the left
-  if (ballX < 0) {
+  if (ballX < 10) {
     ballDirectionX = 1;
     sound("tap");
   }
   // Ball hits the right
-  // if (ballX > gameScreenWidth - 20) {
-  if (ballX > gameScreenWidth) {
+  if (ballX > gameScreenWidth - 10) {
     ballDirectionX = -1;
+
     sound("tap");
   }
   // Ball hits the paddle
   if (
-    ballX > paddle.offsetLeft &&
+    ballX + 20 > paddle.offsetLeft &&
     ballX < paddle.offsetLeft + paddleWidth &&
-    ballY > paddle.offsetTop
+    ballY + 30 > paddle.offsetTop
   ) {
     ballDirectionY = -1;
+
+    // Calculate the distance from the center of the paddle
+    let distanceFromCenter = ballX - (paddle.offsetLeft + paddleWidth / 2);
+
+    // Scale the distance to a reasonable value for ballDirectionX
+    let scaleFactor = 10;
+    ballDirectionX = distanceFromCenter / scaleFactor;
+
     sound("hit");
   }
+
   // Ball hits the brick
   detectBrickCollisions(ballX, ballY);
 }
@@ -232,11 +247,13 @@ function moveBall() {
   if (ballReleased) {
     requestAnimationFrame(function () {
       detectBallCollisions();
+
       // This makes the ball move
       ballX += ballDirectionX * ballSpeed;
       ballY += ballDirectionY * ballSpeed;
       ball.style.left = ballX + "px";
       ball.style.top = ballY + "px";
+
       moveBall();
     });
   } else {
