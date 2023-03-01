@@ -1,0 +1,29 @@
+function dropPowerUp(a,b){
+  const powerup = document.createElement("div");
+  powerup.classList.add("powerup");
+  powerup.style.top = a + "px";
+  powerup.style.left = b + "px";
+  //document.appendChild(powerup)
+  grid[0].appendChild(powerup)
+}
+ 
+
+// Brick collision detection
+function detectBrickCollisions(ballX, ballY) {
+  for (let i = 0; i < brick.length; i++) {
+    if (
+      ballX + 20 > brick[i].offsetLeft &&
+      ballX < brick[i].offsetLeft + brick[i].offsetWidth &&
+      ballY + 20 > brick[i].offsetTop &&
+      ballY < brick[i].offsetTop + brick[i].offsetHeight
+    ) {
+      ballDirectionY = 1;
+      brick[i].style.display = "none";
+      scoreCounter();
+      if (Math.random() > 0.1){
+        dropPowerUp(ballX,ballY)
+        console.log("green ball inc")
+      }
+    }
+  }
+}
