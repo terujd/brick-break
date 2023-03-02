@@ -238,6 +238,7 @@ function detectBrickCollisions(ballX, ballY) {
     ) {
       ballDirectionY = -ballDirectionY;
       brick[i].style.display = "none";
+      generatePowerup(brick[i]);
       scoreCounter();
     }
   }
@@ -265,6 +266,32 @@ function moveBall() {
 }
 
 // -----------------------------------------------Game mechanics------------------------------------------------
+
+// Powerups
+function generatePowerup(Brick) {
+  let x = Brick.offsetLeft;
+  let y = Brick.offsetTop;
+
+  let powerup = document.createElement("div");
+  powerup.classList.add("powerup");
+  powerup.style.left = x;
+  powerup.style.top = y;
+  gameScreen.appendChild(powerup);
+  movePowerup(powerup);
+}
+
+function movePowerup(powerup) {
+  let powerupY = powerup.offsetTop;
+  if (powerupY < gameScreen.offsetHeight) {
+    requestAnimationFrame(function () {
+      powerupY += 5;
+      powerup.style.top = powerupY + "px";
+      movePowerup(powerup);
+    });
+  } else {
+    powerup.remove();
+  }
+}
 
 // Lives counter
 function livesCounter() {

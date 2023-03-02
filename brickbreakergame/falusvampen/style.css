@@ -66,6 +66,15 @@
   /* add more styles here */
 }
 
+.powerup {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: rgb(18, 171, 177);
+  border: 1px solid #fff;
+  /* add more styles here */
+}
+
 #game-info {
   display: flex;
   justify-content: space-between;
