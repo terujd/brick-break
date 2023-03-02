@@ -47,11 +47,11 @@ function createBricks(levelData) {
 // Level 1
 
 const level1 = [
+  [0, 0, 0, 1, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0],
 ];
 const levelData = [
   [1, 0, 1, 0, 1, 0, 1, 0, 1],
@@ -164,10 +164,10 @@ document.addEventListener("keydown", function (event) {
 
 let ballDirectionX = 0;
 let ballDirectionY = 1;
-let ballSpeed = 1;
+let ballSpeed = 3;
 let ballRadius = 10;
 
-function getDistance(x1, y1, x2, y2) {
+function getDistance(ballX, ballY, x, y) {
   let xDistance = x2 - x1;
   let yDistance = y2 - y1;
 
@@ -185,7 +185,7 @@ function detectBallCollisions() {
     sound("tap");
   }
   // Ball hits the bottom
-  if (ballY > gameScreen.offsetHeight - 20) {
+  if (ballY > gameScreen.offsetHeight - 35) {
     livesCounter();
     ballDirectionX = 1;
     ballDirectionY = -1;
@@ -203,20 +203,21 @@ function detectBallCollisions() {
     sound("tap");
   }
   // Ball hits the paddle
-  if (
-    ballX + 20 > paddle.offsetLeft &&
-    ballX < paddle.offsetLeft + paddleWidth &&
-    ballY + 30 > paddle.offsetTop
-  ) {
-    ballDirectionY = -1;
+  if (ballY + 30 > paddle.offsetTop && ballY + 30 < paddle.offsetTop + 10) {
+    if (
+      ballX + 20 > paddle.offsetLeft &&
+      ballX < paddle.offsetLeft + paddleWidth &&
+      ballY + 30 > paddle.offsetTop
+    ) {
+      ballDirectionY = -1;
 
-    // Calculate the distance from the center of the paddle
-    let distanceFromCenter = ballX - (paddle.offsetLeft + paddleWidth / 2);
+      // Calculate the distance from the center of the paddle
+      let distanceFromCenter = ballX - (paddle.offsetLeft + paddleWidth / 2);
 
-    // Scale the distance to a reasonable value for ballDirectionX
-    let scaleFactor = 10;
-    ballDirectionX = distanceFromCenter / scaleFactor;
-
+      // Scale the distance to a reasonable value for ballDirectionX
+      let scaleFactor = 10;
+      ballDirectionX = distanceFromCenter / scaleFactor;
+    }
     sound("hit");
   }
 
@@ -227,13 +228,15 @@ function detectBallCollisions() {
 // Brick collision detection
 function detectBrickCollisions(ballX, ballY) {
   for (let i = 0; i < brick.length; i++) {
+    let brickRect = brick[i].getBoundingClientRect();
+    let ballRect = ball.getBoundingClientRect();
     if (
-      ballX + 20 > brick[i].offsetLeft &&
-      ballX < brick[i].offsetLeft + brick[i].offsetWidth &&
-      ballY + 20 > brick[i].offsetTop &&
-      ballY < brick[i].offsetTop + brick[i].offsetHeight
+      ballRect.right > brickRect.left &&
+      ballRect.left < brickRect.right &&
+      ballRect.bottom > brickRect.top &&
+      ballRect.top < brickRect.bottom
     ) {
-      ballDirectionY = 1;
+      ballDirectionY = -ballDirectionY;
       brick[i].style.display = "none";
       scoreCounter();
     }
