@@ -239,6 +239,7 @@ function detectBrickCollisions(ballX, ballY) {
     ) {
       ballDirectionY = -ballDirectionY;
       // brick[i].style.display = "none";
+      generatePowerup(brickRect.left, brickRect.top);
       brick[i].remove();
 
       // console.log(
@@ -247,7 +248,6 @@ function detectBrickCollisions(ballX, ballY) {
       //   brickRect.top,
       //   brickRect.bottom
       // );
-      generatePowerup(brickRect.left, brickRect.top);
       scoreCounter();
     }
   }
@@ -284,8 +284,9 @@ function generatePowerup(x, y) {
 
   let powerup = document.createElement("div");
   powerup.classList.add("powerup");
-  powerup.style.left = x / 2 + 40 + "px";
-  powerup.style.top = y / 2 + "px";
+  powerup.style.left =
+    x - gameScreenWidth - brickWidth / 2 - ballRadius / 2 + "px";
+  powerup.style.top = y + "px";
   gameScreen.appendChild(powerup);
   movePowerup(powerup);
 }
@@ -302,7 +303,10 @@ function movePowerup(powerup) {
   } else {
     powerup.remove();
   }
-  if (powerupY + 30 > paddle.offsetTop && powerupY + 30 < paddle.offsetTop + 10) {
+  if (
+    powerupY + 30 > paddle.offsetTop &&
+    powerupY + 30 < paddle.offsetTop + 10
+  ) {
     if (
       powerupX + 20 > paddle.offsetLeft &&
       powerupX < paddle.offsetLeft + paddleWidth &&
@@ -315,27 +319,25 @@ function movePowerup(powerup) {
   }
 }
 
-
-function doPowerup(){
+function doPowerup() {
   let nb = Math.random();
-  if (nb < 0.33){
+  if (nb < 0.33) {
     //powerup #1 Add 1 more Life
-    console.log("low")
+    console.log("low");
     addOneLife();
   }
-  if (nb > 0.33 && nb < 0.66){
+  if (nb > 0.33 && nb < 0.66) {
     //powerup #2 Add 1 more ball?
-    console.log("mid")
+    console.log("mid");
   }
-  if (nb > 0.66){
+  if (nb > 0.66) {
     //powerup #3 gopnik?
-    console.log("high")
+    console.log("high");
   }
 }
 
-
 //adds 1 life to the player
-function addOneLife(){
+function addOneLife() {
   let currentLives = parseInt(lives.innerHTML.split(" ")[1]);
   currentLives++;
   lives.innerHTML = "Lives: " + currentLives;
