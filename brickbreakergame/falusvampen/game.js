@@ -55,9 +55,9 @@ const level1 = [
 ];
 const levelData = [
   [1, 0, 1, 0, 1, 0, 1, 0, 1],
-  [0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [0, 1, 0, 1, 1, 1, 0, 1, 0],
   [1, 0, 1, 0, 1, 0, 1, 0, 1],
-  [0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [0, 1, 0, 1, 1, 1, 0, 1, 0],
   [1, 0, 1, 0, 1, 0, 1, 0, 1],
 ];
 
@@ -227,6 +227,7 @@ function detectBallCollisions() {
 
 // Brick collision detection
 function detectBrickCollisions(ballX, ballY) {
+  console.log(brick.length);
   for (let i = 0; i < brick.length; i++) {
     let brickRect = brick[i].getBoundingClientRect();
     let ballRect = ball.getBoundingClientRect();
@@ -237,8 +238,16 @@ function detectBrickCollisions(ballX, ballY) {
       ballRect.top < brickRect.bottom
     ) {
       ballDirectionY = -ballDirectionY;
-      brick[i].style.display = "none";
-      generatePowerup(brick[i]);
+      // brick[i].style.display = "none";
+      brick[i].remove();
+
+      // console.log(
+      //   brickRect.left,
+      //   brickRect.right,
+      //   brickRect.top,
+      //   brickRect.bottom
+      // );
+      generatePowerup(brickRect.left, brickRect.top);
       scoreCounter();
     }
   }
@@ -268,14 +277,15 @@ function moveBall() {
 // -----------------------------------------------Game mechanics------------------------------------------------
 
 // Powerups
-function generatePowerup(Brick) {
-  let x = Brick.offsetLeft;
-  let y = Brick.offsetTop;
+function generatePowerup(x, y) {
+  // brickRect = Brick.getBoundingClientRect();
+
+  console.log(x, y);
 
   let powerup = document.createElement("div");
   powerup.classList.add("powerup");
-  powerup.style.left = x;
-  powerup.style.top = y;
+  powerup.style.left = x / 2 + 40 + "px";
+  powerup.style.top = y / 2 + "px";
   gameScreen.appendChild(powerup);
   movePowerup(powerup);
 }
