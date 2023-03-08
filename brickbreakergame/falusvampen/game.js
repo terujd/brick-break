@@ -292,6 +292,7 @@ function generatePowerup(x, y) {
 
 function movePowerup(powerup) {
   let powerupY = powerup.offsetTop;
+  let powerupX = powerup.offsetLeft;
   if (powerupY < gameScreen.offsetHeight) {
     requestAnimationFrame(function () {
       powerupY += 5;
@@ -301,6 +302,43 @@ function movePowerup(powerup) {
   } else {
     powerup.remove();
   }
+  if (powerupY + 30 > paddle.offsetTop && powerupY + 30 < paddle.offsetTop + 10) {
+    if (
+      powerupX + 20 > paddle.offsetLeft &&
+      powerupX < paddle.offsetLeft + paddleWidth &&
+      powerupY + 30 > paddle.offsetTop
+    ) {
+      //implement powerups here
+      doPowerup();
+    }
+    sound("hit");
+  }
+}
+
+
+function doPowerup(){
+  let nb = Math.random();
+  if (nb < 0.33){
+    //powerup #1 Add 1 more Life
+    console.log("low")
+    addOneLife();
+  }
+  if (nb > 0.33 && nb < 0.66){
+    //powerup #2 Add 1 more ball?
+    console.log("mid")
+  }
+  if (nb > 0.66){
+    //powerup #3 gopnik?
+    console.log("high")
+  }
+}
+
+
+//adds 1 life to the player
+function addOneLife(){
+  let currentLives = parseInt(lives.innerHTML.split(" ")[1]);
+  currentLives++;
+  lives.innerHTML = "Lives: " + currentLives;
 }
 
 // Lives counter
