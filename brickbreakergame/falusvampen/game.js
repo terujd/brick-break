@@ -164,7 +164,7 @@ document.addEventListener("keydown", function (event) {
 
 let ballDirectionX = 0;
 let ballDirectionY = 1;
-let ballSpeed = 3;
+let ballSpeed = 1;
 let ballRadius = 10;
 
 function getDistance(ballX, ballY, x, y) {
@@ -280,13 +280,15 @@ function moveBall() {
 function generatePowerup(x, y) {
   // brickRect = Brick.getBoundingClientRect();
 
+  gameScreenRect = gameScreen.getBoundingClientRect();
+
   console.log(x, y);
 
   let powerup = document.createElement("div");
   powerup.classList.add("powerup");
   powerup.style.left =
-    x - gameScreenWidth - brickWidth / 2 - ballRadius / 2 + "px";
-  powerup.style.top = y + "px";
+    x - gameScreenRect.left - powerup.offsetWidth / 2 + ballRadius + "px";
+  powerup.style.top = y - gameScreenRect.top - powerup.offsetHeight / 2 + "px";
   gameScreen.appendChild(powerup);
   movePowerup(powerup);
 }
