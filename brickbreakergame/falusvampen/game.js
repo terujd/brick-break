@@ -164,7 +164,7 @@ document.addEventListener("keydown", function (event) {
 
 let ballDirectionX = 0;
 let ballDirectionY = 1;
-let ballSpeed = 1;
+let ballSpeed = 5;
 let ballRadius = 10;
 
 function getDistance(ballX, ballY, x, y) {
@@ -296,9 +296,9 @@ function generatePowerup(x, y) {
 function movePowerup(powerup) {
   let powerupY = powerup.offsetTop;
   let powerupX = powerup.offsetLeft;
-  if (powerupY < gameScreen.offsetHeight) {
+  if (powerupY < gameScreen.offsetHeight - powerup.offsetHeight) {
     requestAnimationFrame(function () {
-      powerupY += 5;
+      powerupY += 4;
       powerup.style.top = powerupY + "px";
       movePowerup(powerup);
     });
@@ -306,18 +306,19 @@ function movePowerup(powerup) {
     powerup.remove();
   }
   if (
-    powerupY + 30 > paddle.offsetTop &&
-    powerupY + 30 < paddle.offsetTop + 10
+    powerupY + powerup.offsetHeight > paddle.offsetTop &&
+    powerupY + powerup.offsetHeight < paddle.offsetTop + 10
   ) {
     if (
-      powerupX + 20 > paddle.offsetLeft &&
+      powerupX + powerup.offsetWidth > paddle.offsetLeft &&
       powerupX < paddle.offsetLeft + paddleWidth &&
-      powerupY + 30 > paddle.offsetTop
+      powerupY + powerup.offsetHeight > paddle.offsetTop
     ) {
       //implement powerups here
+      powerup.remove();
       doPowerup();
+      sound("hit");
     }
-    sound("hit");
   }
 }
 
