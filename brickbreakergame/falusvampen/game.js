@@ -9,6 +9,18 @@ const brick = document.getElementsByClassName("brick");
 const grid = document.getElementsByClassName("grid");
 const pause = document.getElementById("pause-btn");
 
+let paused = false;
+
+pause.addEventListener("click", function () {
+  if (pause.innerHTML === "Pause") {
+    pause.innerHTML = "Resume";
+    paused = true;
+  } else {
+    pause.innerHTML = "Pause";
+    paused = false;
+  }
+});
+
 // -----------------------------------------------Bricks------------------------------------------------
 // Constants for brick dimensions and layout
 const numCols = 9;
@@ -78,6 +90,10 @@ let animationId;
 let currentDirection = null;
 
 document.addEventListener("keydown", function (event) {
+  if (paused) {
+    cancelAnimationFrame(animationId);
+    return;
+  }
   if (event.code === "ArrowLeft") {
     movePaddleLeft();
   } else if (event.code === "ArrowRight") {
