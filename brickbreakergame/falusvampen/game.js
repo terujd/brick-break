@@ -7,6 +7,7 @@ const paddle = document.getElementById("paddle");
 const ball = document.getElementById("ball");
 const brick = document.getElementsByClassName("brick");
 const grid = document.getElementsByClassName("grid");
+const pause = document.getElementById("pause-btn");
 
 // -----------------------------------------------Bricks------------------------------------------------
 // Constants for brick dimensions and layout
