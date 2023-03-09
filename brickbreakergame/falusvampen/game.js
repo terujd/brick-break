@@ -8,6 +8,7 @@ const ball = document.getElementById("ball");
 const brick = document.getElementsByClassName("brick");
 const grid = document.getElementsByClassName("grid");
 const pause = document.getElementById("pause-btn");
+const powerup = document.getElementById("powerup");
 
 let paused = false;
 
@@ -18,6 +19,8 @@ pause.addEventListener("click", function () {
   } else {
     pause.innerHTML = "Pause";
     paused = false;
+    moveBall();
+    // resume powerupmovement (new function that replaces the original powerup?)
   }
 });
 
@@ -171,14 +174,15 @@ holdball();
 
 // Start the game with spacebar
 document.addEventListener("keydown", function (event) {
-  if (event.code === "Space") {
-    if (!ballReleased) {
-      ballReleased = true;
-      moveBall();
+  if (!paused) {
+    if (event.code === "Space") {
+      if (!ballReleased) {
+        ballReleased = true;
+        moveBall();
+      }
     }
   }
 });
-
 let ballDirectionX = 0;
 let ballDirectionY = 1;
 let ballSpeed = 5;
@@ -274,7 +278,9 @@ function detectBrickCollisions(ballX, ballY) {
 function moveBall() {
   let ballX = ball.offsetLeft;
   let ballY = ball.offsetTop;
-  if (ballReleased) {
+
+  if (ballReleased && !paused) {
+    // check if ballReleased and paused is false
     requestAnimationFrame(function () {
       detectBallCollisions();
 
@@ -286,6 +292,9 @@ function moveBall() {
 
       moveBall();
     });
+  } else if (paused) {
+    // check if paused is true
+    // do nothing, ball movement is paused
   } else {
     holdball();
   }
@@ -314,11 +323,13 @@ function movePowerup(powerup) {
   let powerupY = powerup.offsetTop;
   let powerupX = powerup.offsetLeft;
   if (powerupY < gameScreen.offsetHeight - powerup.offsetHeight) {
-    requestAnimationFrame(function () {
-      powerupY += 4;
-      powerup.style.top = powerupY + "px";
-      movePowerup(powerup);
-    });
+    if (!paused) {
+      requestAnimationFrame(function () {
+        powerupY += 4;
+        powerup.style.top = powerupY + "px";
+        movePowerup(powerup);
+      });
+    }
   } else {
     powerup.remove();
   }
