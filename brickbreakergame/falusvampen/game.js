@@ -11,7 +11,6 @@ const pause = document.getElementById("pause-btn");
 const powerup = document.getElementById("powerup");
 
 let paused = false;
-
 pause.addEventListener("click", function () {
   if (pause.innerHTML === "Pause") {
     pause.innerHTML = "Resume";
@@ -20,7 +19,7 @@ pause.addEventListener("click", function () {
     pause.innerHTML = "Pause";
     paused = false;
     moveBall();
-    // resume powerupmovement (new function that replaces the original powerup?)
+    movePowerup(document.querySelector(".powerup"));
   }
 });
 
@@ -302,21 +301,34 @@ function moveBall() {
 
 // -----------------------------------------------Game mechanics------------------------------------------------
 
+function random() {
+  // return true or false randomly (10% chance of true)
+  return Math.random() < 0.1;
+}
+
+let powerupExists = false;
+
 // Powerups
 function generatePowerup(x, y) {
   // brickRect = Brick.getBoundingClientRect();
 
-  gameScreenRect = gameScreen.getBoundingClientRect();
+  if (random() && !powerupExists) {
+    gameScreenRect = gameScreen.getBoundingClientRect();
 
-  console.log(x, y);
+    console.log(x, y);
 
-  let powerup = document.createElement("div");
-  powerup.classList.add("powerup");
-  powerup.style.left =
-    x - gameScreenRect.left - powerup.offsetWidth / 2 + ballRadius + "px";
-  powerup.style.top = y - gameScreenRect.top - powerup.offsetHeight / 2 + "px";
-  gameScreen.appendChild(powerup);
-  movePowerup(powerup);
+    let powerup = document.createElement("div");
+    powerup.classList.add("powerup");
+    powerup.style.left =
+      x - gameScreenRect.left - powerup.offsetWidth / 2 + ballRadius + "px";
+    powerup.style.top =
+      y - gameScreenRect.top - powerup.offsetHeight / 2 + "px";
+    gameScreen.appendChild(powerup);
+
+    powerupExists = true;
+
+    movePowerup(powerup);
+  }
 }
 
 function movePowerup(powerup) {
@@ -332,6 +344,7 @@ function movePowerup(powerup) {
     }
   } else {
     powerup.remove();
+    powerupExists = false;
   }
   if (
     powerupY + powerup.offsetHeight > paddle.offsetTop &&
@@ -344,6 +357,7 @@ function movePowerup(powerup) {
     ) {
       //implement powerups here
       powerup.remove();
+      powerupExists = false;
       doPowerup();
       sound("hit");
     }
