@@ -15,6 +15,10 @@
  text-decoration-color: #fff;
  color: #fff;
   }
+  h1{
+    text-decoration-color: #fff;
+    color: #fff;
+  }
   
   /* Keyframes */
   @keyframes star {
@@ -186,3 +190,21 @@
     transform: translateY(-100%);
   }
 }
+/*
+#container {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+  
+}
+
+#containercover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+*/
