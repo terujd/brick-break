@@ -1,9 +1,13 @@
     /* Animation properties */
 .star {
-    animation: star 10s ease-out infinite;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+    animation: star 25s ease-out ;
   }
   .wars {
-    animation: wars 10s ease-out infinite;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation: wars 25s ease-out;
   }
   .byline span {
     animation: spin-letters 10s linear infinite;
@@ -37,6 +41,7 @@
     100% {
       opacity: 0;
       transform: translateZ(-1000em);
+      display: none;
     }
   }
   
@@ -162,9 +167,9 @@
   -webkit-transform: translateY(100%);
   transform: translateY(100%);
   
-  -moz-animation: my-animation 50s linear infinite;
-  -webkit-animation: my-animation 50s linear infinite;
-  animation: my-animation 50s linear infinite;
+  -moz-animation: my-animation 70s linear infinite;
+  -webkit-animation: my-animation 70s linear infinite;
+  animation: my-animation 70s linear infinite;
 }
 
 /* for Firefox */
