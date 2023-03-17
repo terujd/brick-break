@@ -10,7 +10,9 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f2f2f2;
+  /*background-color: #f2f2f2;*/
+  background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+  visibility: hidden;
 }
 
 .grid {
@@ -119,3 +121,225 @@
   border: 2px solid #000;
   cursor: pointer;
 }
+    /* Animation properties */
+    .star {
+      animation-fill-mode: forwards;
+      animation-iteration-count: 1;
+        animation: star 25s ease-out ;
+      }
+      .wars {
+        animation-fill-mode: forwards;
+        animation-iteration-count: 1;
+        animation: wars 25s ease-out;
+      }
+      .byline span {
+        animation: spin-letters 10s linear infinite;
+      }
+      .byline {
+        animation: move-byline 10s linear infinite;
+      }
+      h2{
+     text-decoration-color: #fff;
+     color: #fff;
+     text-decoration:wavy;
+      }
+      h1{
+        text-decoration-color: #fff;
+        color: #fff;
+      }
+      
+      /* Keyframes */
+      @keyframes star {
+        0% {
+          opacity: 0;
+          transform: scale(1.5) translateY(-0.75em);
+        }
+        20% {
+          opacity: 1;
+        }
+        89% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateZ(-1000em);
+          display: none;
+        }
+      }
+      
+      @keyframes wars {
+        0% {
+          opacity: 0;
+          transform: scale(1.5) translateY(0.5em);
+        }
+        20% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateZ(-1000em);
+        }
+      }
+      
+      @keyframes spin-letters {
+        0%, 10% {
+          opacity: 0;
+          transform: rotateY(90deg);
+        }
+        30% {
+          opacity: 1;
+        }
+        70%, 86% {
+          transform: rotateY(0);
+          opacity: 1;
+        }
+        95%, 100% {
+          opacity: 0;
+        }
+      }
+      
+      @keyframes move-byline {
+        0% {
+          transform: translateZ(5em);
+        }
+        100% {
+          transform: translateZ(0);
+        }
+      }
+      #container-cover {
+      overflow: hidden;
+      }
+      body {
+        max-height: 100vh;
+        overflow: hidden;
+      }
+    
+      /* Make the 3D work on the container */
+      .starwars-demo {
+        perspective: 800px;
+        transform-style: preserve3d;
+      }
+      
+      /* General styles and layout */
+      body {
+        background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+      }
+      
+      .starwars-demo {
+        height: 17em;
+        left: 50%;
+        position: absolute;
+        top: 53%;
+        transform: translate(-50%, -50%);
+        width: 34em;
+      }
+      
+      .byline span {
+        display: inline-block;
+      }
+      
+      img {
+        width: 100%;
+      }
+      
+      .star, .wars, .byline {
+        position: absolute;
+      }
+      
+      .star {
+        top: -0.75em;
+      }
+      
+      .wars {
+        bottom: -0.5em;
+      }
+      
+      .byline {
+        color: #fff;
+        font-family: "ITC Serif Gothic", Lato;
+        font-size: 2.25em;
+        left: -2em;
+        letter-spacing: 0.4em;
+        right: -2em;
+        text-align: center;
+        text-transform: uppercase;
+        top: 29%;
+      }
+      
+      /*** Media queries for adjusting to different screen sizes ***/
+      
+      @media only screen and (max-width: 600px) {
+        .starwars-demo {
+          font-size: 10px;
+        }
+      }
+      
+      @media only screen and (max-width: 480px) {
+        .starwars-demo {
+          font-size: 7px;
+        }
+      }
+      
+      #scroll-container {
+      border: 3px solid black;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    #scroll-text {
+      /* animation properties */
+      -moz-transform: translateY(100%);
+      -webkit-transform: translateY(100%);
+      transform: translateY(100%);
+      
+      -moz-animation: my-animation 70s linear infinite;
+      -webkit-animation: my-animation 70s linear infinite;
+      animation: my-animation 70s linear infinite;
+    }
+    
+    /* for Firefox */
+    @-moz-keyframes my-animation {
+      from { -moz-transform: translateY(100%); }
+      to { -moz-transform: translateY(-100%); }
+    }
+    
+    /* for Chrome */
+    @-webkit-keyframes my-animation {
+      from { -webkit-transform: translateY(100%); }
+      to { -webkit-transform: translateY(-100%); }
+    }
+    
+    @keyframes my-animation {
+      from {
+        -moz-transform: translateY(100%);
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+      }
+      to {
+        -moz-transform: translateY(-100%);
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+      }
+    }
+    /*
+    #container {
+      position: relative;
+      width: 400px;
+      height: 500px;
+      background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+      
+    }
+    
+    #containercover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f2f2f2;
+    }
+    */
