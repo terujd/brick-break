@@ -279,10 +279,10 @@ function moveBall() {
   let ballY = ball.offsetTop;
 
   if (ballReleased && !paused) {
+    startTimer();
     // check if ballReleased and paused is false
     requestAnimationFrame(function () {
       detectBallCollisions();
-
       // This makes the ball move
       ballX += ballDirectionX * ballSpeed;
       ballY += ballDirectionY * ballSpeed;
@@ -376,9 +376,16 @@ function doPowerup() {
     console.log("mid");
   }
   if (nb > 0.66) {
-    //powerup #3 gopnik?
+    //powerup #3 Add 10 seconds to timer
     console.log("high");
+    addTimer();
   }
+}
+//adds 10 seconds to timer
+function addTimer() {
+let currentTimer = parseInt(timer.innerHTML.split(" ")[1]);
+currentTimer = currentTimer + 10;
+timer.innerHTML = "Timer: " + currentTimer;
 }
 
 //adds 1 life to the player
@@ -409,6 +416,19 @@ function scoreCounter() {
     alert("You won!");
     document.location.reload();
   }
+}
+
+//Timer function removes one second from timer
+function timerCounter() {
+  let currentTimer = parseInt(timer.innerHTML.split(" ")[1]);
+  currentTimer = currentTimer- 1;
+  timer.innerHTML = "Time: " + currentTimer;
+}
+//Starts timer and runs timerCounter function every second
+function startTimer() {
+  setInterval(function () {
+   timerCounter();
+  }, 1000);
 }
 
 // Sound effects and music
