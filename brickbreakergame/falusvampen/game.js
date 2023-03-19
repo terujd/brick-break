@@ -30,6 +30,7 @@ const numRows = 5;
 const brickWidth = 40;
 const brickHeight = 20;
 const brickSpacing = 2;
+let count = 0
 
 function createBricks(levelData) {
   // Calculate the width of the grid based on the number of columns, brick width, and spacing
@@ -48,11 +49,13 @@ function createBricks(levelData) {
     for (let col = 0; col < numCols; col++) {
       // Create a new brick element only if the value at that position is 1
       if (levelData[row][col] === 1) {
+        count++
         const brick = document.createElement("div");
         brick.classList.add("brick");
         brick.style.top = row * (brickHeight + brickSpacing) + "px";
         brick.style.left = col * (brickWidth + brickSpacing) + "px";
         grid[0].appendChild(brick);
+        
       }
     }
   }
@@ -412,8 +415,8 @@ function scoreCounter() {
   let currentScore = parseInt(score.innerHTML.split(" ")[1]);
   currentScore++;
   score.innerHTML = "Score: " + currentScore;
-  if (currentScore === brick.length) {
-    alert("You won!");
+  if (currentScore === count) {
+    alert("Nice Job, Press ENTER for next level");
     document.location.reload();
   }
 }
