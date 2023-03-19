@@ -178,6 +178,7 @@ document.addEventListener("keydown", function (event) {
       if (!ballReleased) {
         ballReleased = true;
         moveBall();
+        startTimer();
       }
     }
   }
@@ -279,7 +280,6 @@ function moveBall() {
   let ballY = ball.offsetTop;
 
   if (ballReleased && !paused) {
-    startTimer();
     // check if ballReleased and paused is false
     requestAnimationFrame(function () {
       detectBallCollisions();
@@ -423,12 +423,16 @@ function timerCounter() {
   let currentTimer = parseInt(timer.innerHTML.split(" ")[1]);
   currentTimer = currentTimer- 1;
   timer.innerHTML = "Time: " + currentTimer;
+  if (currentTimer === -1) {
+    alert("Game over, ran out of time");
+    document.location.reload();
+  }
 }
+
+
 //Starts timer and runs timerCounter function every second
 function startTimer() {
-  setInterval(function () {
-   timerCounter();
-  }, 1000);
+  setInterval(timerCounter,1000);
 }
 
 // Sound effects and music
