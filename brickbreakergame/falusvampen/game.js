@@ -268,6 +268,7 @@ function detectBrickCollisions(ballX, ballY) {
       ballRect.bottom > brickRect.top &&
       ballRect.top < brickRect.bottom
     ) {
+      sound("break");
       ballDirectionY = -ballDirectionY;
       // brick[i].style.display = "none";
       generatePowerup(brickRect.left, brickRect.top);
