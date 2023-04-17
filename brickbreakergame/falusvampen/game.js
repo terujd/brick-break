@@ -1,3 +1,10 @@
+document.addEventListener("keydown", function (event) {
+  if (event.code === "Enter" && introdone === false) {
+    introdone = true;
+    paused = false;
+  }
+});
+
 // DOM elements
 const gameScreen = document.getElementById("game-screen");
 const score = document.getElementById("score");
@@ -10,7 +17,8 @@ const grid = document.getElementsByClassName("grid");
 const pause = document.getElementById("pause-btn");
 const powerup = document.getElementById("powerup");
 
-let paused = false;
+let paused = true;
+let introdone = false;
 pause.addEventListener("click", function () {
   if (pause.innerHTML === "Pause") {
     pause.innerHTML = "Resume";
@@ -30,7 +38,7 @@ const numRows = 5;
 const brickWidth = 40;
 const brickHeight = 20;
 const brickSpacing = 2;
-let count = 0
+let count = 0;
 
 function createBricks(levelData) {
   // Calculate the width of the grid based on the number of columns, brick width, and spacing
@@ -49,13 +57,12 @@ function createBricks(levelData) {
     for (let col = 0; col < numCols; col++) {
       // Create a new brick element only if the value at that position is 1
       if (levelData[row][col] === 1) {
-        count++
+        count++;
         const brick = document.createElement("div");
         brick.classList.add("brick");
         brick.style.top = row * (brickHeight + brickSpacing) + "px";
         brick.style.left = col * (brickWidth + brickSpacing) + "px";
         grid[0].appendChild(brick);
-        
       }
     }
   }
@@ -386,9 +393,9 @@ function doPowerup() {
 }
 //adds 10 seconds to timer
 function addTimer() {
-let currentTimer = parseInt(timer.innerHTML.split(" ")[1]);
-currentTimer = currentTimer + 10;
-timer.innerHTML = "Timer: " + currentTimer;
+  let currentTimer = parseInt(timer.innerHTML.split(" ")[1]);
+  currentTimer = currentTimer + 10;
+  timer.innerHTML = "Timer: " + currentTimer;
 }
 
 //adds 1 life to the player
@@ -424,7 +431,7 @@ function scoreCounter() {
 //Timer function removes one second from timer
 function timerCounter() {
   let currentTimer = parseInt(timer.innerHTML.split(" ")[1]);
-  currentTimer = currentTimer- 1;
+  currentTimer = currentTimer - 1;
   timer.innerHTML = "Time: " + currentTimer;
   if (currentTimer === -1) {
     alert("Game over, ran out of time");
@@ -432,10 +439,9 @@ function timerCounter() {
   }
 }
 
-
 //Starts timer and runs timerCounter function every second
 function startTimer() {
-  setInterval(timerCounter,1000);
+  setInterval(timerCounter, 1000);
 }
 
 // Sound effects and music
