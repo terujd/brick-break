@@ -4,6 +4,35 @@
   box-sizing: border-box;
 }
 
+#welcome {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 999;
+}
+
+#welcome h1 {
+  font-size: 3em;
+  color: #fff;
+}
+
+#welcome p {
+  font-size: 1.5em;
+  color: #fff;
+  margin-top: 20px;
+}
+
+#start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 999;
+}
+
 #game-container {
   display: flex;
   flex-direction: column;
@@ -133,6 +162,7 @@
   animation-iteration-count: 1;
   animation: wars 10s ease-out;
 }
+
 .byline span {
   animation: spin-letters 10s linear infinite;
 }
@@ -186,7 +216,7 @@ h1 {
     transform: translateZ(-1000em);
   }
 }
-
+/* 
 @keyframes spin-letters {
   0%,
   10% {
@@ -205,16 +235,16 @@ h1 {
   100% {
     opacity: 0;
   }
-}
+} */
 
-@keyframes move-byline {
+/* @keyframes move-byline {
   0% {
     transform: translateZ(5em);
   }
   100% {
     transform: translateZ(0);
   }
-}
+} */
 #container-cover {
   overflow: hidden;
 }
@@ -295,6 +325,7 @@ img {
   border: 3px solid black;
   border-radius: 5px;
   overflow: hidden;
+  /* display: none; */
 }
 #scroll-text {
   /* animation properties */
@@ -302,15 +333,20 @@ img {
   -webkit-transform: translateY(100%);
   transform: translateY(100%);
 
-  -moz-animation: my-animation 70s linear infinite;
-  -webkit-animation: my-animation 70s linear infinite;
-  animation: my-animation 70s linear infinite;
+  /* -moz-animation: scroll 70s linear;
+  -webkit-animation: scroll 70s linear;
+  animation: scroll 70s linear; */
+}
+.scroll-animation {
+  animation: scroll 75s linear;
+  -moz-animation: scroll 75s linear;
+  -webkit-animation: scroll 75s linear;
 }
 
 /* for Firefox */
-@-moz-keyframes my-animation {
+@-moz-keyframes scroll {
   from {
-    -moz-transform: translateY(100%);
+    -moz-transform: translateY(40%);
   }
   to {
     -moz-transform: translateY(-100%);
@@ -318,16 +354,16 @@ img {
 }
 
 /* for Chrome */
-@-webkit-keyframes my-animation {
+@-webkit-keyframes scroll {
   from {
-    -webkit-transform: translateY(100%);
+    -webkit-transform: translateY(40%);
   }
   to {
     -webkit-transform: translateY(-100%);
   }
 }
 
-@keyframes my-animation {
+@keyframes scroll {
   from {
     -moz-transform: translateY(40%);
     -webkit-transform: translateY(40%);
@@ -339,21 +375,3 @@ img {
     transform: translateY(-100%);
   }
 }
-/*
-    #container {
-      position: relative;
-      width: 400px;
-      height: 500px;
-      background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
-      
-    }
-    
-    #containercover {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f2f2f2;
-    }
-    */
