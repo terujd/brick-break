@@ -13,3 +13,5 @@ Bugfixes:
 #4 ball collision with paddle(goes through the ends of the paddle sometimes) issue is probably in moveBall function
 #5 time doesn't stop when game is paused
 #6 either make the power ups fall slower or make the paddle move faster to make it a beter ratio.
+#7 fix scaling issues in the rolling intro(the text "Press space to start" goes out of the screen)
+#7.5 fix so that the text "Press space to start" doesn't go in/over the rolling text.
