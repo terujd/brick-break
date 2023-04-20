@@ -15,6 +15,11 @@ const start = document.getElementById("start");
 start.style.visibility = "hidden";
 
 all.style.visibility = "hidden";
+
+// Create an <audio> element and add it to the HTML
+const audio = document.createElement("audio");
+audio.src = "music/starwars.mp3";
+
 startbtn.addEventListener("click", () => {
   scroll.classList.add("scroll-animation");
   starElement1.classList.add("star");
@@ -22,6 +27,10 @@ startbtn.addEventListener("click", () => {
   all.style.visibility = "visible";
   welcome.style.visibility = "hidden";
   skip.style.visibility = "visible";
+
+  // Play the audio file
+  audio.play();
+
   // setTimeout(() => {
   //   start.style.visibility = "visible";
   // }, 70000);
@@ -42,9 +51,17 @@ const intro = document.getElementById("containercover");
 //game.addEventListener('')
 document.addEventListener("keydown", function (event) {
   if (event.code === "Enter") {
+    // Stop the audio file
+    audio.pause();
+    audio.currentTime = 0;
+    // Start the background music
+    audio.src = "music/back.mp3";
+    audio.loop = true;
+    audio.play();
+
     skip.style.visibility = "hidden";
     welcome.style.visibility = "hidden";
-    start.style.visibility = "hidden";
+    start.style.display = "none";
     all.style.visibility = "hidden";
     game.style.visibility = "visible";
     intro.style.visibility = "hidden";
