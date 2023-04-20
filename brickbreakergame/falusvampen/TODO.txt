@@ -1,6 +1,0 @@
-#1 1/3 powerups made, add 2 more
-#2 implement Pause button
-
-Bugfixes:
-#1 brick side collision? (might be fixed)
-#2 powerups spawn twice, issue is in movePowerup function
