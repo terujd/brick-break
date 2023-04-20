@@ -213,7 +213,7 @@ function detectBallCollisions() {
   // Ball hits the top
   if (ballY < 0) {
     ballDirectionY = 1;
-    sound("tap");
+    sound("wallhit.mp3");
   }
   // Ball hits the bottom
   if (ballY > gameScreen.offsetHeight - 35) {
@@ -225,13 +225,13 @@ function detectBallCollisions() {
   // Ball hits the left
   if (ballX < 10) {
     ballDirectionX = 1;
-    sound("tap");
+    sound("wallhit.mp3");
   }
   // Ball hits the right
   if (ballX > gameScreenWidth - 10) {
     ballDirectionX = -1;
 
-    sound("tap");
+    sound("wallhit.mp3");
   }
   // Ball hits the paddle
   if (ballY + 30 > paddle.offsetTop && ballY + 30 < paddle.offsetTop + 10) {
@@ -249,7 +249,7 @@ function detectBallCollisions() {
       let scaleFactor = 10;
       ballDirectionX = distanceFromCenter / scaleFactor;
     }
-    sound("hit");
+    sound("blaster.mp3");
   }
 
   // Ball hits the brick
@@ -268,7 +268,7 @@ function detectBrickCollisions(ballX, ballY) {
       ballRect.bottom > brickRect.top &&
       ballRect.top < brickRect.bottom
     ) {
-      sound("break");
+      sound("yoda.mp3");
       ballDirectionY = -ballDirectionY;
       // brick[i].style.display = "none";
       generatePowerup(brickRect.left, brickRect.top);
@@ -447,7 +447,7 @@ function startTimer() {
 
 // Sound effects and music
 function sound(src) {
-  let sound = new Audio("music/" + src + ".wav");
+  let sound = new Audio("music/" + src);
   sound.play();
 }
 
