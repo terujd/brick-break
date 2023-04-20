@@ -5,13 +5,14 @@
 Ideas: 
 #1 make diffrent types of bricks, some requires more hits to break, some are indestructible, some are breakable but give you a powerup.
 #2 make the bricks, balls and paddle suit the theme of game.
+#3 make the game screen bigger.
 
 Bugfixes:
 #1 brick side collision? (might be fixed)
 #2 powerups spawn twice, issue is in movePowerup function
 #3 powerup collision with paddle, issue is in movePowerup function
 #4 ball collision with paddle(goes through the ends of the paddle sometimes) issue is probably in moveBall function
-#5 time doesn't stop when game is paused
+#5 time doesn't stop when game is paused (might be fixed)
 #6 either make the power ups fall slower or make the paddle move faster to make it a beter ratio.
 #7 fix scaling issues in the rolling intro(the text "Press space to start" goes out of the screen)
 #7.5 fix so that the text "Press space to start" doesn't go in/over the rolling text.
