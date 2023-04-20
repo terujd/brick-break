@@ -23,12 +23,12 @@ pause.addEventListener("click", function () {
   if (pause.innerHTML === "Pause") {
     pause.innerHTML = "Resume";
     paused = true;
-  } else {
-    pause.innerHTML = "Pause";
-    paused = false;
-    moveBall();
-    movePowerup(document.querySelector(".powerup"));
+    return;
   }
+  pause.innerHTML = "Pause";
+  paused = false;
+  moveBall();
+  movePowerup(document.querySelector(".powerup"));
 });
 
 // -----------------------------------------------Bricks------------------------------------------------
@@ -398,7 +398,6 @@ function addTimer() {
   currentTimer = currentTimer + 10;
   timer.innerHTML = "Timer: " + currentTimer;
 }
-
 //adds 1 life to the player
 function addOneLife() {
   let currentLives = parseInt(lives.innerHTML.split(" ")[1]);
@@ -431,6 +430,10 @@ function scoreCounter() {
 
 //Timer function removes one second from timer
 function timerCounter() {
+  if (paused) {
+    cancelAnimationFrame(animationId);
+    return;
+  }
   let currentTimer = parseInt(timer.innerHTML.split(" ")[1]);
   currentTimer = currentTimer - 1;
   timer.innerHTML = "Time: " + currentTimer;
